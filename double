@@ -1,6 +1,7 @@
 #include<iostream>
 #include<cmath>
 #include<iomanip>
+#include<cassert>
 using namespace std;
 const double eps=1e-9;
 const double pi=acos(-1.0);
@@ -17,21 +18,33 @@ struct point
   void output(){cout<<x<<" -- "<<y<<endl;}
   point operator+(const point &p)const{return {x+p.x,y+p.y};}
   point operator-(const point &p)const{return {x-p.x,y-p.y};}
+  point operator*(double &d){return {x*d,y*d};}
+  point operator/(double &d){return {x/d,y/d};}
   double operator*(const point &p){return x*p.x+y*p.y;}
   double operator^(const point &p)const{return x*p.y-y*p.x;}
-  double valSquerd()const{return x*x+y*y;}
+  void set(const double &a,const double &b){x=a,y=b;}
+  double valSqure()const{return x*x+y*y;}
   double distSqure(const point &p)const{return (x-p.x)*(x-p.x)+(y-p.y)*(y-p.y);}
-  point unitPerpendicularDown()const{double d=sqrt(valSquerd());return {-y/d,x/d};}
+  point unitPerpendicularDown()const{double d=sqrt(valSqure());return {-y/d,x/d};}
+  point rotate(double &ang){double px=x*cos(ang)-y*sin(ang);y=x*sin(ang)+y*cos(ang);x=px;}
 };
 struct line
 {
-  point p,v;double ang;
+  point p,v;double ang,c;
   line(){}
-  line(point p1,point p2){p=p1,v=p2-p1;ang=atan2(v.y,v.x);}
-  bool operator<(const line &l)const{return ang<l.ang;}
-  point intersection(line l)
+  line(point p1,point p2){p=p1,v=p2-p1;ang=atan2(v.y,v.x),c=v^p;}
+  void set(point _p,point _v){p=_p,v=_v;}
+  line perpendicular(const point &p1)
   {
-    point u=p-l.p;
+    line ret;ret.v.set(-v.y,v.x);ret.p=p1;
+    return ret;
+  }
+  bool isParallel(const line &l){return sgn(v^l.v)==0;}
+  bool operator<(const line &l)const{return ang<l.ang;}
+  double pointDist(const point &p1)const{return double(v^p1)-c;}
+  point intersection(const line &l)
+  {
+    point u=p-l.p;//assert(0) for parallel;
     double t=(l.v^u)/(v^l.v);
     return p+v*t;
   }
