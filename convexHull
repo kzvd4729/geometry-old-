@@ -16,8 +16,9 @@ void balance(void)
     else break;
   }
 }
-//returns cpunter-clock-wise;
+//returns counter-clock-wise;
 //first=last;
+//is it ok for repetative point?
 vector<point>monotoneChain(vector<point>&v)
 {
   sort(v.begin(),v.end());
