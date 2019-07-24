@@ -19,6 +19,7 @@ void balance(void)
 //returns counter-clock-wise;
 //first=last;
 //is it ok for repetative point?
+//may be handle 1 case differently
 vector<point>monotoneChain(vector<point>&v)
 {
   sort(v.begin(),v.end());
