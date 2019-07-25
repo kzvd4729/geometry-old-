@@ -3,4 +3,4 @@
 3. Angle of regular polygoan = (n-2)pi/n;
 4. Apothem of polygoan(shortest distance from center to side) = side/2tan(pi/n);
 5. In a N*N grid a convexhull can have maximum N^(2/3) vertices of lattice point
-   after omitting straight line point.
+   after omitting straight line point. For random input it is N(1/3);
