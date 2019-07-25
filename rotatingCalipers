@@ -1,5 +1,5 @@
-//polygoan in convex
-//points are ordered
+//polygoan is convex and ordered
+//not closed circuit
 //return the farthest distance squared;
 int rotatingCalipers(vector<point>&p)
 {
