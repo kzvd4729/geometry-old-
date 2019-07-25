@@ -7,10 +7,10 @@ struct point
   point operator-(const point &p)const{return {x-p.x,y-p.y};}
   int operator*(const point &p){return x*p.x+y*p.y;}
   int operator^(const point &p)const{return x*p.y-y*p.x;}
+
 };
 int sgn(int val){return val>0?1:(val==0?0:-1);}
-int n;
-vector<point>seq;
+int n;point p0;vector<point>seq;
 //inside or on the triangle
 bool pointInTriangle(point a,point b,point c,point p)
 {
@@ -24,26 +24,26 @@ void prepare(vector<point>&poly)
   for(int i=1;i<n;i++)
     if(poly[i]<poly[pos])pos=i;
   rotate(poly.begin(),poly.begin()+pos,poly.end());
-  n--;seq.resize(n);
+  n--;seq.resize(n);p0=poly[0];
   for(int i=0;i<n;i++)
     seq[i]=poly[i+1]-poly[0];
 }
 //point is inside or on
 bool pointInConvexPolygoan(point p)
 {
+  p=p-p0;
   if((seq[0]^p)!=0&&sgn(seq[0]^p)!=sgn(seq[0]^seq[n-1]))
     return false;
   if((seq[n-1]^p)!=0&&sgn(seq[n-1]^p)!=sgn(seq[n-1]^seq[0]))
     return false;
   if((seq[0]^p)==0)
     return (seq[0]*seq[0])>=(p*p);
-  int l=0,r=n-1;
+  int l=0,r=n-1,md;
   while(r-l>1)
   {
-    int mid=(l+r)/2;int pos=mid;
-    if((seq[pos]^p)>=0)l=mid;
-    else r=mid;
+    md=(l+r)/2;
+    if((seq[md]^p)>=0)l=md;
+    else r=md;
   }
-  int pos=l;
-  return pointInTriangle(seq[pos],seq[pos+1],point(0,0),p);
+  return pointInTriangle(seq[l],seq[l+1],point(0,0),p);
 }
