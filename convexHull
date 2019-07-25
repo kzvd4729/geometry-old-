@@ -11,6 +11,7 @@ void balance(void)
   while(top>=3)
   {
     //>=0 to omit straight line point;
+    //for repetative point have to be >=0;
     if(((stck[top-1]-stck[top-2])^(stck[top]-stck[top-2]))>0)
       stck[top-1]=stck[top],top--;
     else break;
