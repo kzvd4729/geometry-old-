@@ -1,6 +1,6 @@
 struct point
 {
-  int x,y,id;
+  int x,y;
   point(){}
   point(int _x,int _y):x(_x), y(_y){}
   bool operator<(const point &p)const{return x<p.x||(x==p.x&&y<p.y);}
