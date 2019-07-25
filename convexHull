@@ -1,9 +1,12 @@
 struct point
 {
   int x,y;
+  point(){}
+  point(int _x,int _y):x(_x), y(_y){}
   bool operator<(const point &p)const{return x<p.x||(x==p.x&&y<p.y);}
   point operator-(const point &p)const{return {x-p.x,y-p.y};}
   int operator^(const point &p)const{return x*p.y-y*p.x;}
+  int distSqure(const point &p)const{return (x-p.x)*(x-p.x)+(y-p.y)*(y-p.y);}
 };
 point stck[N+2];int top=0;
 void balance(void)
@@ -11,16 +14,14 @@ void balance(void)
   while(top>=3)
   {
     //>=0 to omit straight line point;
-    //for repetative point have to be >=0;
-    if(((stck[top-1]-stck[top-2])^(stck[top]-stck[top-2]))>0)
+    //for repetative or straight line point >0;
+    if(((stck[top-1]-stck[top-2])^(stck[top]-stck[top-2]))>=0)
       stck[top-1]=stck[top],top--;
     else break;
   }
 }
 //returns counter-clock-wise;
-//first=last;
-//is it ok for repetative point?
-//may be handle 1 case differently
+//a path, not closed circuit
 vector<point>monotoneChain(vector<point>&v)
 {
   sort(v.begin(),v.end());
@@ -34,5 +35,6 @@ vector<point>monotoneChain(vector<point>&v)
   top--;
   while(top>0)
     hull.push_back(stck[top--]);
+  if(hull.size()>1)hull.pop_back();
   return hull;
 }
