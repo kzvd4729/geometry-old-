@@ -31,6 +31,11 @@ struct point
   bool operator<(const point &p)const{return x<p.x||(sgn(x-p.x)==0&&y<p.y);}
   double dist(point p){return sqrt((x-p.x)*(x-p.x)+(y-p.y)*(y-p.y));}
 };
+int orientation(point a,point b,point c)
+{
+  return sgn((b-a)^(c-a));
+  //0 for straight line 1 for ccw -1 for cw
+}
 struct line
 {
   point p,v;//v is vector,going through p;
@@ -40,6 +45,14 @@ struct line
   {
     return sgn(v^l.v)==0;
     //have to be same vector,so area 0;
+  }
+  int whichSide(point p1)
+  {
+    return sgn(v^(p1-p));
+    //0 if point belongs to the line
+    //can return positive or negative
+    //compare a known points sign to 
+    //determine left or right
   }
   point intersection(line l)
   {
