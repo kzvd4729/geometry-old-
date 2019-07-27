@@ -1,3 +1,7 @@
+/*
+In a N*N grid a convexhull can have maximum N^(2/3) vertices of lattice point 
+after omitting straight line point. For random input it is N^(1/3);
+*/
 struct point
 {
   int x,y;
@@ -14,7 +18,6 @@ void balance(void)
   while(top>=3)
   {
     //>=0 to omit straight line point;
-    //for repetative or straight line point >0;
     if(((stck[top-1]-stck[top-2])^(stck[top]-stck[top-2]))>=0)
       stck[top-1]=stck[top],top--;
     else break;
