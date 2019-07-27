@@ -1,0 +1,4 @@
+1. Sine Rule: a/sinA=b/sinB=c/sinC(a is the oponent side of angle A).
+2. Cosine Rule: a^2=b^2+c^2-2bc cosA.
+3. Angle of regular polygoan = (n-2)pi/n;
+4. Apothem of polygoan(shortest distance from center to side) = side/2tan(pi/n);
