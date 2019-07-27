@@ -41,6 +41,13 @@ struct line
   point p,v;//v is vector,going through p;
   line(){}
   line(point p1,point p2){p=p1,v=p2-p1;}
+  line perpendicular(point p)
+  {
+    line l;l.v=point(-v.y,v.x);
+    l.p=p;return l;
+    //rotating the vector 90 degree
+    //the line going through point p
+  }
   bool isParallel(line l)
   {
     return sgn(v^l.v)==0;
@@ -54,10 +61,31 @@ struct line
     //compare a known points sign to 
     //determine left or right
   }
+  double pointDist(point p1){return (v^p1)-(v^p);}
   point intersection(line l)
   {
     //check for parallel;
     double t=(l.v^(p-l.p))/(v^l.v);
     return p+v*t;
+  }
+};
+struct segment
+{
+  point s,e;
+  segment(){}
+  segment(point _s,point _e):s(_s),e(_e){}
+  void in(){cin>>s.x>>s.y>>e.x>>e.y;}
+  void out(){cout<<s.x<<" "<<s.y<<" --> "<<e.x<<" "<<e.y<<endl;}
+  bool inRec(point p)
+  {
+    double mxx=max(s.x,e.x),mnx=min(s.x,e.x);
+    double mxy=max(s.y,e.y),mny=min(s.y,e.y);
+    return p.x<=mxx+eps&&p.x>=mnx-eps&&p.y<=mxy+eps&&p.y>=mny-eps;
+    //point p is inside(or on) the rectangle formed by the segment.
+  }
+  double pointDist(point p)
+  {
+    if(inRec(p))return line(s,e).pointDist(p);//perpendicular dist
+    return min(s.dist(p),e.dist(p));
   }
 };
