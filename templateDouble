@@ -36,6 +36,13 @@ int orientation(point a,point b,point c)
   return sgn((b-a)^(c-a));
   //0 for straight line 1 for ccw -1 for cw
 }
+bool inRec(point s,point e,point p)
+{
+  double mxx=max(s.x,e.x),mnx=min(s.x,e.x);
+  double mxy=max(s.y,e.y),mny=min(s.y,e.y);
+  return p.x<=mxx+eps&&p.x>=mnx-eps&&p.y<=mxy+eps&&p.y>=mny-eps;
+  //point p is inside(or on) the rectangle formed by the segment.
+}
 struct line
 {
   point p,v;//v is vector,going through p;
@@ -76,16 +83,4 @@ struct segment
   segment(point _s,point _e):s(_s),e(_e){}
   void in(){cin>>s.x>>s.y>>e.x>>e.y;}
   void out(){cout<<s.x<<" "<<s.y<<" --> "<<e.x<<" "<<e.y<<endl;}
-  bool inRec(point p)
-  {
-    double mxx=max(s.x,e.x),mnx=min(s.x,e.x);
-    double mxy=max(s.y,e.y),mny=min(s.y,e.y);
-    return p.x<=mxx+eps&&p.x>=mnx-eps&&p.y<=mxy+eps&&p.y>=mny-eps;
-    //point p is inside(or on) the rectangle formed by the segment.
-  }
-  double pointDist(point p)
-  {
-    if(inRec(p))return line(s,e).pointDist(p);//perpendicular dist
-    return min(s.dist(p),e.dist(p));
-  }
 };
