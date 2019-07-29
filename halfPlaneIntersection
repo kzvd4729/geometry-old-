@@ -61,5 +61,5 @@ vector<point>halfPlaneIntersection(vector<line>&l)
   if(last-first<=1)return poly;
   p[last]=q[last].intersection(q[first]);
   for(int i=first;i<=last;i++)poly.push_back(p[i]);
-  return poly;
+  return poly;//ccw path
 }
