@@ -23,14 +23,20 @@ struct line
   bool operator<(const line &l)const{return ang<l.ang;}
   point intersection(line l)
   {
+    //care for parallel lines???
     double t=(l.v^(p-l.p))/(v^l.v);
     return p+v*t;
   }
 };
-//lines are extended to infinity.
-//there is a half plane in counter-clock
-//side of every line
-//finds the common polygoan of those halfplane
+/*
+Lines are extended to infinity. There is a halfplane
+in counter-clock side of every line.
+Finds the common polygoan of those halfplane.
+If lines are not bounded, infinity rectangle 
+can be added. To include the point that doesn't 
+generate area(intersection is a straight line) replace
+eps with -eps.
+*/
 vector<point>halfPlaneIntersection(vector<line>&l)
 {
   //lines are anti-clockwise
@@ -40,17 +46,17 @@ vector<point>halfPlaneIntersection(vector<line>&l)
   q[first]=l[0];
   for(int i=1;i<n;i++)
   {
-    while(first<last&&(l[i].v^(p[last-1]-l[i].p))<=eps)last--;
-    while(first<last&&(l[i].v^(p[first]-l[i].p))<=eps)first++;
+    while(first<last&&(l[i].v^(p[last-1]-l[i].p))<=eps)last--;//<-eps
+    while(first<last&&(l[i].v^(p[first]-l[i].p))<=eps)first++;//<-eps
     q[++last]=l[i];
     if(sgn(q[last].v^q[last-1].v)==0)
     {
       last--;
-      if((q[last].v^(l[i].p-q[last].p))>eps)q[last]=l[i];
+      if((q[last].v^(l[i].p-q[last].p))>eps)q[last]=l[i];//>=-eps
     }
     if(first<last)p[last-1]=q[last-1].intersection(q[last]);
   }
-  while(first<last&&(q[first].v^(p[last-1]-q[first].p))<=eps)
+  while(first<last&&(q[first].v^(p[last-1]-q[first].p))<=eps)//<-eps
     last--;
   if(last-first<=1)return poly;
   p[last]=q[last].intersection(q[first]);
