@@ -1,4 +1,10 @@
+#define setp(a) cout<<setprecision(a)<<fixed
 const double eps=1e-9;
+int sgn(double x)
+{
+  if(fabs(x)<=eps)return 0;
+  return x>0?1:-1;
+}
 struct point
 {
   double x,y;
@@ -17,16 +23,10 @@ struct line
   bool operator<(const line &l)const{return ang<l.ang;}
   point intersection(line l)
   {
-    point u=p-l.p;
-    double t=(l.v^u)/(v^l.v);
+    double t=(l.v^(p-l.p))/(v^l.v);
     return p+v*t;
   }
 };
-int sgn(double x)
-{
-  if(fabs(x)<=eps)return 0;
-  return x>0?1:-1;
-}
 //lines are extended to infinity.
 //there is a half plane in counter-clock
 //side of every line
