@@ -16,6 +16,8 @@ struct point
   point operator-(point p){return {x-p.x,y-p.y};}
   point operator*(double d){return {x*d,y*d};}
   point operator/(double d){return {x/d,y/d};}
+  void inp(){cin>>x>>y;}
+  void out(){cout<<x<<" -- "<<y<<endl;}
   double operator*(point p)
   {
     return x*p.x+y*p.y;
